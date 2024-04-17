@@ -1,0 +1,36 @@
+<div class="repos">
+    <h2>Repositories</h2>
+    <ul>
+        <% repos.forEach(repo => { %>
+            <li><a href="/orgs/<%- orgName %>/repositories/<%- repo.name %>"><%= repo.name %></a></li>
+        <% }) %>
+    </ul>
+
+    <% if (locals.showAllRepos && showAllRepos) { %>
+        <button><a href="/orgs/<%- orgName %>/repositories">Show All</a></button>
+    <% } %>
+    <% if (locals.pagination && pagination) { %>
+        <div class="pagination">
+            <a
+            <% if (locals.firstPage) { %> 
+                href="/orgs/<%- orgName %>/repositories?page=<%- firstPage %>"
+            <% } %>
+            >First</a>
+            <a
+            <% if (locals.prevPage) { %> 
+                href="/orgs/<%- orgName %>/repositories?page=<%- prevPage %>"
+            <% } %>
+            >Prev</a>
+            <a
+            <% if (locals.nextPage) { %> 
+                href="/orgs/<%- orgName %>/repositories?page=<%- nextPage %>"
+            <% } %>
+            >Next</a>
+            <a
+            <% if (locals.lastPage) { %> 
+                href="/orgs/<%- orgName %>/repositories?page=<%- lastPage %>"
+            <% } %>
+            >Last</a>
+        </div>
+    <% } %>
+</div>
