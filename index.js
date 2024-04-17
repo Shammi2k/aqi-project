@@ -37,6 +37,23 @@ const getRepositoriesJSON = async (orgName, page) => {
     return response;
 }
 
+const getPRsJSON = async (orgName, repoName) => {
+    const response = await octokit.request('GET /repos/{org}/{repo}/pulls', {
+        org: orgName,
+        repo: repoName
+    });
+    return response;
+}
+
+const getReviewsJSON = async (orgName, repoName, pullNumber) => {
+    const response = await octokit.request('GET /repos/{org}/{repo}/pulls/{pull_number}/reviews', {
+        org: orgName,
+        repo: repoName,
+        pull_number: pullNumber
+    });
+    return response;
+}
+
 const octokit = new Octokit({ 
     auth: getToken(),
   });
@@ -54,6 +71,39 @@ app.get("/", async (req, res) => {
     const organizations = (await getOrganizationsJSON()).data;
     response.organizations = organizations;
     res.render("index.ejs", response);
+});
+
+app.get("/orgs/*/repositories/*", async (req, res) => {
+    const response = {};
+    const userInfo = (await getUsersJSON()).data;
+    response.user = {};
+    response.user.name = userInfo.name;
+    const orgName = req.url.split("/orgs/")[1].split("/repositories")[0];
+    const repoName = req.url.split("repositories/")[1];
+    response.repoName = repoName;
+    const prsList = (await getPRsJSON(orgName, repoName)).data;
+    for(const pr of prsList) {
+        const reviewsJSON = (await getReviewsJSON(orgName, repoName, pr.number)).data;
+        const reviewedUsers = {};
+        reviewsJSON.forEach(review => {
+            if (review.state == "APPROVED" || review.state == "CHANGES_REQUESTED")
+            {
+                console.log(review.user.login)
+                reviewedUsers[review.user.id] = review;
+            }
+        });
+        
+        pr.reviewedUsers = reviewedUsers;
+    };
+    response.prs = prsList;
+    // prsList.forEach(pr => {
+    //     console.log(pr.reviewedUsers);
+    //     for (var reviewer in pr.reviewedUsers)
+    //     {
+    //         console.log(reviewer);
+    //     }
+    // });
+    res.render("repo.ejs", response);
 });
 
 app.get("/orgs/*/repositories", async (req, res) => {

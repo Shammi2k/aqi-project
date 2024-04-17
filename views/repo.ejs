@@ -1,0 +1,30 @@
+<%- include("partials/header.ejs") %>
+<div class="prs">
+    <h2>Pull Requests</h2>
+    <% if(prs.length == 0) {%>
+    <h4>No Pull Requests</h4>
+    <% } else { %>
+    <ul>
+    <% prs.forEach(pr => { %>
+        <li class="pr">
+            <a href="<%- pr.html_url %>"><%= pr.title %></a>
+            <div class="state"><%= pr.state %></div>
+            <div class="user"><%= pr.user.login %></div>
+            <div class="revievers">  
+                <% pr.requested_reviewers.forEach(reviewer => { %>
+                <div class="reviewer">
+                    <%= reviewer.login %>
+                </div>
+                <% }) %>
+                <% for (var reviewer in pr.reviewedUsers) { %>
+                <div class="reviewer">
+                    <%= pr.reviewedUsers[reviewer].user.login %>
+                </div>
+                <% } %>
+            </div>
+        </li>
+    <% }) %>
+    </ul>
+    <% } %>
+</div>
+<%- include("partials/footer.ejs") %>
