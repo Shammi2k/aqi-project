@@ -88,7 +88,6 @@ app.get("/orgs/*/repositories/*", async (req, res) => {
         reviewsJSON.forEach(review => {
             if (review.state == "APPROVED" || review.state == "CHANGES_REQUESTED")
             {
-                console.log(review.user.login)
                 reviewedUsers[review.user.id] = review;
             }
         });
@@ -96,13 +95,6 @@ app.get("/orgs/*/repositories/*", async (req, res) => {
         pr.reviewedUsers = reviewedUsers;
     };
     response.prs = prsList;
-    // prsList.forEach(pr => {
-    //     console.log(pr.reviewedUsers);
-    //     for (var reviewer in pr.reviewedUsers)
-    //     {
-    //         console.log(reviewer);
-    //     }
-    // });
     res.render("repo.ejs", response);
 });
 
@@ -120,7 +112,6 @@ app.get("/orgs/*/repositories", async (req, res) => {
     {
         page = parseInt(req.query.page);
     }
-    console.log("Page : " + page);
     response.page = page;
     const repos = await getRepositoriesJSON(orgName, page);
     const linkHeader = repos.headers.link;
