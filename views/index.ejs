@@ -1,2 +1,10 @@
 <%- include("partials/header.ejs") %>
+<div class="orgs">
+    <h2>Organizations</h2>
+<ul>
+    <% organizations.forEach(organization => { %>
+        <li><a href="/orgs/<%- organization.id %>"><%= organization.login %></a></li>
+    <% }) %>
+</ul>
+</div>
 <%- include("partials/footer.ejs") %>
