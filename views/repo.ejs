@@ -7,7 +7,7 @@
     <ul>
     <% prs.forEach(pr => { %>
         <li class="pr">
-            <a href="<%- pr.html_url %>"><%= pr.title %></a>
+            <a href="<%- pr.html_url %>" target="_blank"><%= pr.title %></a>
             <div class="state"><%= pr.state %></div>
             <div class="user"><%= pr.user.login %></div>
             <div class="revievers">  
