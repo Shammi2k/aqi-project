@@ -5,53 +5,67 @@ import fs from "fs";
 const app = express();
 const port = 3000;
 var userData;
-var PAT;
 
 const getToken = () => {
-    if (!PAT)
-    {
-        const data = fs.readFileSync("secrets.json");
-        const dataJSON = JSON.parse(data);
-        PAT = dataJSON.token;
-        console.log("PAT loaded on server");
-    }
-    return PAT;
+    const data = fs.readFileSync("secrets.json");
+    const dataJSON = JSON.parse(data);
+    return dataJSON.token;
 }
 
 const getUsersJSON = async () => {
     if (!userData)
     {
-        const response = await octokit.request("/user");
-        userData = response;
+        try {
+            const response = await octokit.request("/user");
+            userData = response;
+        } catch (error) {
+            console.log(error);
+        }
     }
     return userData;
 }
 
 const getOrganizationsJSON = async () => {
-    const response = await octokit.request('GET /user/orgs')
-    return response;
+    try {
+        const response = await octokit.request('GET /user/orgs')
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const getRepositoriesJSON = async (orgName, page) => {
-    const response = await octokit.request(`GET /orgs/${orgName}/repos?page=${page}`);
-    return response;
+    try {
+        const response = await octokit.request(`GET /orgs/${orgName}/repos?page=${page}`);
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const getPRsJSON = async (orgName, repoName) => {
-    const response = await octokit.request('GET /repos/{org}/{repo}/pulls', {
-        org: orgName,
-        repo: repoName
-    });
-    return response;
+    try {
+        const response = await octokit.request('GET /repos/{org}/{repo}/pulls', {
+            org: orgName,
+            repo: repoName
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const getReviewsJSON = async (orgName, repoName, pullNumber) => {
-    const response = await octokit.request('GET /repos/{org}/{repo}/pulls/{pull_number}/reviews', {
-        org: orgName,
-        repo: repoName,
-        pull_number: pullNumber
-    });
-    return response;
+    try {
+        const response = await octokit.request('GET /repos/{org}/{repo}/pulls/{pull_number}/reviews', {
+            org: orgName,
+            repo: repoName,
+            pull_number: pullNumber
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const octokit = new Octokit({ 
