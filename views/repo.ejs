@@ -9,7 +9,11 @@
         <li class="pr">
             <a href="<%- pr.html_url %>" target="_blank" class="title"><%= pr.title %></a>
             <div class="state <%= pr.state %>"><span><%= pr.state %></span></div>
-            <div class="user"><img src=<%= pr.user.avatar_url %> class="user-image" name = <%= pr.user.login %>></div>
+            <div class="user">
+                <img src=<%= pr.user.avatar_url %> class="user-image">
+                <a class="user-url" href=<%= pr.user.html_url %> target="_blank"></a>
+                <span class="tooltiptext"><%= pr.user.login %></span>
+            </div>
             <div class="reviewers">  
                 <% for (var reviewer in pr.reviewedUsers) { %>
                     <div class="reviewer <%- pr.reviewedUsers[reviewer].state %>">
@@ -18,12 +22,17 @@
                         <% } else if (pr.reviewedUsers[reviewer].state == "CHANGES_REQUESTED") { %>
                             <i class="fa-solid fa-circle-exclamation reviewer-review"></i>
                         <% } %>
-                        <img src=<%= pr.reviewedUsers[reviewer].user.avatar_url %> class="user-image" name = <%= pr.reviewedUsers[reviewer].user.login %>>
+                        <% console.log("Hello : " + pr.reviewedUsers[reviewer].state) %>
+                        <img src=<%= pr.reviewedUsers[reviewer].user.avatar_url %> class="user-image">
+                        <a class="user-url" href=<%= pr.reviewedUsers[reviewer].user.html_url %> target="_blank"></a>
+                        <span class="tooltiptext"><%= pr.reviewedUsers[reviewer].user.login %></span>
                     </div>
                 <% } %>
                 <% pr.requested_reviewers.forEach(reviewer => { %>
                 <div class="reviewer">
-                    <img src=<%= reviewer.avatar_url %> class="user-image" name = <%= reviewer.login %>>
+                    <img src=<%= reviewer.avatar_url %> class="user-image"/>
+                    <a class="user-url" href=<%= reviewer.html_url %> target="_blank"></a>
+                    <span class="tooltiptext"><%= reviewer.login %></span>
                 </div>
                 <% }) %>
             </div>
