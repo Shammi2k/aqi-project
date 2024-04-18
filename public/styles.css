@@ -105,13 +105,18 @@ a.disable {
     row-gap: 2rem;
 }
 
+.pr:hover {
+    background-color: #f6f8fa;
+}
+
 .pr .title {
     font-weight: 500;
     font-size: 1.17em;
+    color: #0969da;
 }
 
 .pr .title:hover {
-    color: #0969da;
+    text-decoration: underline;
 }
 
 .pr .state {
