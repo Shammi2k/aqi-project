@@ -22,7 +22,6 @@
                         <% } else if (pr.reviewedUsers[reviewer].state == "CHANGES_REQUESTED") { %>
                             <i class="fa-solid fa-circle-exclamation reviewer-review"></i>
                         <% } %>
-                        <% console.log("Hello : " + pr.reviewedUsers[reviewer].state) %>
                         <img src=<%= pr.reviewedUsers[reviewer].user.avatar_url %> class="user-image">
                         <a class="user-url" href=<%= pr.reviewedUsers[reviewer].user.html_url %> target="_blank"></a>
                         <span class="tooltiptext"><%= pr.reviewedUsers[reviewer].user.login %></span>
