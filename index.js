@@ -62,6 +62,7 @@ app.get("/", async (req, res) => {
         response.user = {};
         response.user.name = userInfo.name;
         response.user.link = userInfo.html_url;
+        response.user.avatar_url = userInfo.avatar_url;
 
         const organizations = (await getOrganizationsJSON()).data;
         response.organizations = organizations;
@@ -78,8 +79,10 @@ app.get("/orgs/*/repositories/*", async (req, res) => {
         const userInfo = (await getUsersJSON()).data;
         response.user = {};
         response.user.name = userInfo.name;
+        response.user.avatar_url = userInfo.avatar_url;
         const orgName = req.url.split("/orgs/")[1].split("/repositories")[0];
         const repoName = req.url.split("repositories/")[1];
+        response.orgName = orgName;
         response.repoName = repoName;
         const prsList = (await getPRsJSON(orgName, repoName)).data;
         for(const pr of prsList) {
@@ -109,6 +112,7 @@ app.get("/orgs/*/repositories", async (req, res) => {
         response.pagination = true;
         response.user = {};
         response.user.name = userInfo.name;
+        response.user.avatar_url = userInfo.avatar_url;
 
         var orgName = req.url.split("/orgs/")[1].split("/repositories")[0];
         response.orgName = orgName;
@@ -145,6 +149,7 @@ app.get("/orgs/*", async (req, res) => {
         response.showAllRepos = true;
         response.user = {};
         response.user.name = userInfo.name;
+        response.user.avatar_url = userInfo.avatar_url;
 
         var orgName = req.url.split("/orgs/")[1];
         response.orgName = orgName;

@@ -9,9 +9,26 @@
 </head>
 <body>
     <header>
-        <a href="/"><i class="fa-brands fa-github fa-xl"></i></a>
-        <a href=<%= user.link %> target="_blank">
-            <%= user.name %>
-        </a>
+        <div class="header-logo-path">
+            <!-- <a href="/"><i class="fa-brands fa-github fa-xl logo"></i></a> -->
+            <div class="user">
+                <i class="fa-brands fa-github fa-xl logo" class="user-image"></i>
+                <a class="user-url" href="/"></a>
+                <span class="tooltiptext">Dashboard</span>
+            </div>
+            <div class="header-path">
+                <% if (locals.orgName) { %>
+                    <a href="/orgs/<%- orgName %>"><%= orgName %></a>
+                    <% } if (locals.repoName) { %>
+                        <span class="path-divider">/</span>
+                    <a href="/orgs/<%- orgName %>/repositories/<%- repoName %>"><%= repoName %></a>
+                    <% } %>
+            </div>
+        </div>
+        <div class="user">
+            <img src="<%= user.avatar_url %>" class="user-image"/>
+            <a class="user-url" href=<%= user.link %> target="_blank"></a>
+            <span class="tooltiptext"><%= user.name %></span>
+        </div>
     </header>
     <main>
