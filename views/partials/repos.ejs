@@ -14,23 +14,32 @@
             <a
             <% if (locals.firstPage) { %> 
                 href="/orgs/<%- orgName %>/repositories?page=<%- firstPage %>"
+            <% } else { %>
+                class="disable"  
             <% } %>
-            >First</a>
+            ><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
             <a
             <% if (locals.prevPage) { %> 
                 href="/orgs/<%- orgName %>/repositories?page=<%- prevPage %>"
+            <% } else { %>
+                class="disable"   
             <% } %>
-            >Prev</a>
+            ><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+            <a class="active"><%= page %></a>
             <a
             <% if (locals.nextPage) { %> 
                 href="/orgs/<%- orgName %>/repositories?page=<%- nextPage %>"
+            <% } else { %>
+                class="disable"  
             <% } %>
-            >Next</a>
+            ><i class="fa fa-angle-right" aria-hidden="true"></i></a>
             <a
             <% if (locals.lastPage) { %> 
                 href="/orgs/<%- orgName %>/repositories?page=<%- lastPage %>"
+            <% } else { %>
+                class="disable"  
             <% } %>
-            >Last</a>
+            ><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
         </div>
     <% } %>
 </div>

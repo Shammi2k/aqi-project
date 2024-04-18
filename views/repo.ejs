@@ -7,20 +7,25 @@
     <ul>
     <% prs.forEach(pr => { %>
         <li class="pr">
-            <a href="<%- pr.html_url %>" target="_blank"><%= pr.title %></a>
-            <div class="state"><%= pr.state %></div>
-            <div class="user"><%= pr.user.login %></div>
-            <div class="revievers">  
+            <a href="<%- pr.html_url %>" target="_blank" class="title"><%= pr.title %></a>
+            <div class="state <%= pr.state %>"><span><%= pr.state %></span></div>
+            <div class="user"><img src=<%= pr.user.avatar_url %> class="user-image" name = <%= pr.user.login %>></div>
+            <div class="reviewers">  
+                <% for (var reviewer in pr.reviewedUsers) { %>
+                    <div class="reviewer <%- pr.reviewedUsers[reviewer].state %>">
+                        <% if (pr.reviewedUsers[reviewer].state == "APPROVED") { %>
+                            <i class="fa fa-check reviewer-review" aria-hidden="true"></i>
+                        <% } else if (pr.reviewedUsers[reviewer].state == "CHANGES_REQUESTED") { %>
+                            <i class="fa-solid fa-circle-exclamation reviewer-review"></i>
+                        <% } %>
+                        <img src=<%= pr.reviewedUsers[reviewer].user.avatar_url %> class="user-image" name = <%= pr.reviewedUsers[reviewer].user.login %>>
+                    </div>
+                <% } %>
                 <% pr.requested_reviewers.forEach(reviewer => { %>
                 <div class="reviewer">
-                    <%= reviewer.login %>
+                    <img src=<%= reviewer.avatar_url %> class="user-image" name = <%= reviewer.login %>>
                 </div>
                 <% }) %>
-                <% for (var reviewer in pr.reviewedUsers) { %>
-                <div class="reviewer">
-                    <%= pr.reviewedUsers[reviewer].user.login %>
-                </div>
-                <% } %>
             </div>
         </li>
     <% }) %>
