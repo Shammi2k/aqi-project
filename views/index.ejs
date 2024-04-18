@@ -3,7 +3,10 @@
     <h2>Organizations</h2>
     <ul>
         <% organizations.forEach(organization => { %>
-            <li><a href="/orgs/<%- organization.login %>"><%= organization.login %></a></li>
+            <li class="org"><a href="/orgs/<%- organization.login %>">
+                <img src="<%= organization.avatar_url %>" class="user-image">
+                <span><%= organization.login %></span>
+            </a></li>
         <% }) %>
     </ul>
 </div>

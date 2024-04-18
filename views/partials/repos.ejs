@@ -7,7 +7,7 @@
     </ul>
 
     <% if (locals.showAllRepos && showAllRepos) { %>
-        <button><a href="/orgs/<%- orgName %>/repositories">Show All</a></button>
+        <button class="show-all-repos"><a href="/orgs/<%- orgName %>/repositories">Show All</a></button>
     <% } %>
     <% if (locals.pagination && pagination) { %>
         <div class="pagination">
